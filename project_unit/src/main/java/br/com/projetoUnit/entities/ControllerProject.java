@@ -1,7 +1,6 @@
 package br.com.projetoUnit.entities;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,27 +11,30 @@ public class ControllerProject {
 	public ControllerProject() {
 		listProject = new ArrayList<Project>();
 	}
+	
+	
+	
+	public void addProjeto() {
+	
 
-	public Object addProjeto(String name, int jdkVersion) {
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println("Digite o nome do projeto:");
+
+		String name = scanner.next().trim();
+
+		System.out.println("Digite a versão da JDK:");
+
+		int jdkVersion = scanner.nextInt();
+
 		Project project = new Project(name, jdkVersion);
-		listProject.add(project);
-		return true;
+
+		this.listProject.add(project);
+		
+		scanner.close();
+		
 	}
-
-	public Object addPackage(String name) {
-		Package pacote = new Package(name);
-		listProject.get(0).getListPackage().add(pacote);
-		return true;
-	}
-
-	public Object addClass(String name, String type) {
-		Class class1 = new Class(name, type);
-
-		listProject.get(0).getListPackage().get(0).getListClass().add(class1);
-
-		return true;
-	}
-
+	
 	public Project searchProjects() {
 
 		for (int i = 0; i < listProject.size(); i++) {
@@ -44,7 +46,7 @@ public class ControllerProject {
 		int index = scanner.nextInt();
 
 		Project project = listProject.get(index);
-		// scanner.close();
+		 scanner.close();
 
 		return project;
 	}
@@ -60,7 +62,7 @@ public class ControllerProject {
 		System.out.println("Select the package: ");
 		int index = scanner.nextInt();
 		Package package1 = project.getListPackage().get(index);
-		// scanner.close();
+		 scanner.close();
 
 		return package1;
 	}
@@ -78,7 +80,7 @@ public class ControllerProject {
 		System.out.println("Select the class:");
 		int index = scanner.nextInt();
 		Class class1 = package1.getListClass().get(index);
-		// scanner.close();
+	    scanner.close();
 
 		return class1;
 	}
@@ -130,10 +132,12 @@ public class ControllerProject {
 		System.out.println("--------------------------");
 		for (Project project : listProject) {
 			if (project.getJdkVersion() < 8) {
-				System.out.println("Este projeto precisa atualizar a JDK");
+				System.err.println("Este projeto precisa atualizar a JDK");
 				return false;
 			}
 		}
+		
+		System.out.println("Projeto possui JDK 8 ou posterior");
 		return true;
 	}
 }
