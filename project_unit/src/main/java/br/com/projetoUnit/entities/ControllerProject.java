@@ -105,54 +105,59 @@ public class ControllerProject {
 
 	public Project searchProjects() {
 
-		System.out.println("----------- listando projeto -----------\n");
+		System.out.println("------------------------------------");
+
+		System.out.println("Listando projeto\n");
+
 		for (int i = 0; i < listProject.size(); i++) {
 			System.out.println("Index:" + i + " project:" + listProject.get(i).getName());
 		}
 
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("\nSelect the project:");
+		System.out.println("\nSelecione o indice para escolher o projeto:");
 		int index = scanner.nextInt();
 
 		Project project = listProject.get(index);
-
+		System.out.println("------------------------------------");
 		return project;
 	}
 
 	public Package searchPackage() {
 		Project project = searchProjects();
-
-		System.out.println("----------- listando pacote -----------\n");
+		System.out.println("------------------------------------");
+		System.out.println("listando pacotes\n");
 		for (int i = 0; i < project.getListPackage().size(); i++) {
 			System.out.println("Index:" + i + " package:" + project.getListPackage().get(i).getName());
 		}
 
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Select the package: ");
+		System.out.println("Selecione o indice para escolher o pacote: ");
 
 		int index = scanner.nextInt();
 
 		Package package1 = project.getListPackage().get(index);
-
+		System.out.println("------------------------------------");
 		return package1;
 	}
 
 	public Class searchClass() {
 
-		System.out.println("----------- listando classe -----------\n");
+		System.out.println("------------------------------------");
+		System.out.println("\nListando classe\n");
 
 		Package package1 = searchPackage();
 
 		for (int i = 0; i < package1.getListClass().size(); i++) {
-			System.out.println("Index:" + i + " class:" + package1.getListClass().get(i));
+			System.out.println("Indice:" + i + " classe:" + package1.getListClass().get(i));
 
 		}
 		Scanner scanner = new Scanner(System.in);
 
-		System.out.println("Select the class:");
+		System.out.println("Selecione o indice para escolher a classe:");
 		int index = scanner.nextInt();
 		Class class1 = package1.getListClass().get(index);
 
+		System.out.println("------------------------------------");
 		return class1;
 	}
 
@@ -177,9 +182,12 @@ public class ControllerProject {
 		System.out.println("Verificação de JDK de projetos");
 
 		System.out.println("--------------------------");
+		
 		for (Project project : listProject) {
 			if (project.getJdkVersion() < 8) {
-				System.err.println("Este projeto precisa atualizar a JDK");
+				System.out.println("Name:" + project.getName());
+				System.out.println("JDK:" + project.getJdkVersion());
+				System.out.println("Este projeto precisa atualizar a JDK");
 				return false;
 			}
 		}
@@ -211,7 +219,9 @@ public class ControllerProject {
 
 	public void compileCode() {
 
-		System.out.println(" ----------- Realizando a compilação da classe ----------- ");
+		System.out.println(" ---------------------- ");
+
+		System.out.println("Realizando a compilação da classe");
 
 		Class classSearch = searchClass();
 
@@ -225,11 +235,31 @@ public class ControllerProject {
 
 		System.out.println("Hello Word");
 
+		System.out.println(" ---------------------- ");
+
+	}
+
+	public boolean setLibrary() {
+		System.out.println("------------------------------------");
+		System.out.println("Setando a biblioteca faltante");
+		Class class1 = listProject.get(1).getListPackage().get(0).getListClass().get(0);
+
+		System.out.println("Class");
+
+		System.out.println("Name:" + class1.getName());
+		System.out.println("Type:" + class1.getType());
+
+		class1.setLibrary("java.io.PrintStream");
+
+		System.out.println("Library:" + class1.getLibrary());
+
+		System.out.println("------------------------------------");
+		return true;
 	}
 
 	public boolean checkLibraryProject() {
-		System.out.println("-------------- verificando bibliotecas nos projetos");
-
+		System.out.println("------------------------------------");
+		System.out.println("verificando bibliotecas nos projetos");
 		for (Project project : listProject) {
 
 			System.out.println("-------- Project -------");
@@ -249,12 +279,13 @@ public class ControllerProject {
 							System.out.println("\t\t -------- Class --------");
 							System.out.println("\t\t Name:" + class1.getName());
 							System.out.println("\t\t Type:" + class1.getType());
-							System.out.println("\t\t Library:" + class1.getType());
+							System.out.println("\t\t Library:" + class1.getLibrary());
 
 							if (class1.getLibrary().isEmpty()) {
 								System.out.println(
-										" \t\tEssa classe precisa adicionar a biblioteca java.io.PrintStream para utilizar o System.out.println()");
-								return true;
+										" \t\t\tEssa classe precisa adicionar a biblioteca java.io.PrintStream para utilizar o System.out.println()");
+								System.out.println("------------------------------------");
+								return false;
 							}
 						}
 					}
@@ -263,7 +294,8 @@ public class ControllerProject {
 
 			}
 		}
-		return false;
+		System.out.println("------------------------------------");
+		return true;
 	}
 
 }

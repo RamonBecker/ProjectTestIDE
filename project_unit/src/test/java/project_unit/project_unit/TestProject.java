@@ -1,7 +1,7 @@
 package project_unit.project_unit;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -13,18 +13,17 @@ class TestProject {
 	private static ControllerProject controllerProject = new ControllerProject();
 
 	@BeforeAll
-	
+
 	static void contrutor() {
 		// controllerProject.addProjeto();
 		controllerProject.addProjetoPredefined();
-		
+
 	}
 
-	@Test
-	@Disabled
+	@BeforeEach
 	void checkVersionJDKProject() {
 
-		assertEquals(controllerProject.checkJDKVersion(), true);
+		assertEquals(controllerProject.checkJDKVersion(), false);
 
 	}
 
@@ -35,21 +34,29 @@ class TestProject {
 	}
 
 	@Test
-	@Disabled
 	void editJDKProject() {
 		assertNull(controllerProject.editJDKProject());
 	}
+//
+//	@Test
+//	void compileCode() {
+//		assertThrows(CompileCode.class, () -> {
+//			controllerProject.compileCode();
+//		});
+//	}
 
-	@Test
-	void compileCode() {
+	@BeforeEach
+	void initCheckLibraryProject() {
+		controllerProject.checkLibraryProject();
+		
+	}
+
+	@AfterEach
+	void retesteCompileCode() {
+		controllerProject.setLibrary();
 		assertThrows(CompileCode.class, () -> {
 			controllerProject.compileCode();
 		});
 	}
-	
-	@BeforeEach
-	void initCheckLibraryProject() {
-		assertEquals(controllerProject.checkLibraryProject(), true);
-	}
-	
+
 }
