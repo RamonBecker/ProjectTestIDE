@@ -4,6 +4,7 @@ public class Class {
 	private String name;
 	private String type;
 	private String code;
+	private String library;
 
 	public Class(String name, String type) {
 		if (name == null || name.isEmpty()) {
@@ -12,8 +13,10 @@ public class Class {
 		if (type == null || type.isEmpty()) {
 			throw new IllegalArgumentException("O tipo da classe não pode ser vazio");
 		}
+
 		this.name = name;
 		this.type = type;
+		this.library = "";
 	}
 
 	public String getName() {
@@ -47,6 +50,17 @@ public class Class {
 			throw new IllegalArgumentException("O código setado não pode ser nulo");
 		}
 		this.code = code;
+	}
+
+	public String getLibrary() {
+		return library;
+	}
+
+	public void setLibrary(String library) {
+		if (library.isEmpty() || library == null) {
+			throw new IllegalArgumentException("A biblioteca não pode ser vazia");
+		}
+		this.library = library;
 	}
 
 	@Override
